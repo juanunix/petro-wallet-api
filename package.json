@@ -1,0 +1,28 @@
+{
+  "name": "petrowalletapi",
+  "version": "1.0.0",
+  "description": "Servidor em Parse para o Petro Wallet",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm test",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/neural-squad/petro-wallet-api.git"
+  },
+  "author": "Neural Squad",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/neural-squad/petro-wallet-api/issues"
+  },
+  "homepage": "https://github.com/neural-squad/petro-wallet-api#readme",
+  "dependencies": {
+    "express": "^4.16.0",
+    "kerberos": "0.0.23",
+    "parse": "^1.10.0",
+    "parse-dashboard": "^1.1.0",
+    "parse-server": "^2.6.2",
+    "underscore": "^1.8.3"
+  }
+}
