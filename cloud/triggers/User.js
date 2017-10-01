@@ -1,4 +1,4 @@
-Parse.Cloud.beforeSave("User", function(request, response) {
+Parse.Cloud.beforeSave(Parse.User, function(request, response) {
 	var user = request.object;
 
 	if(user.isNew()) {
