@@ -9,6 +9,7 @@ Parse.Cloud.beforeSave(Parse.User, function(request, response) {
 
 	if(user.dirty('balance')) {
 		let query = new Parse.Query(Parse.User);
+		console.log("----->",user.id);
 		query.get(user.id).then((oldUser) => {
 			if(!oldUser){
                 response.success();
