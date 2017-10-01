@@ -69,8 +69,8 @@ class Balance {
                     return this.currentUser.fetch();
                 })
                 .then((user) => {
-                    user.set("balance", value);
-                    return user.save();
+                    user.set("balance", parseFloat(value));
+                    return user.save(null, {useMasterKey:true});
                 })
                 .then((user) => {
                     this.response.success(user);
