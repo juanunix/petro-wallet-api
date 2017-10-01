@@ -63,16 +63,21 @@ class Balance {
         let query = new Parse.Query(Parse.User);
         query.equalTo("username", cpf);
 
-        query.first()
-            .then((user) => {
-                user.set("balance", value);
-                return user.save();
-            })
-            .then((user) => {
-                this.response.success(user);
-            }, (error) => {
-                this.response.error(error);
-            })
+        try {
+            query.first()
+                .then((user) => {
+                    user.set("balance", value);
+                    return user.save();
+                })
+                .then((user) => {
+                    this.response.success(user);
+                }, (error) => {
+                    this.response.error(error);
+                })
+        } catch (Error) {
+            this.response.error({message: "Não foi possível realizar operação!"});
+            return;
+        }
     }
 }
 
