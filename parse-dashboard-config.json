@@ -1,26 +1,18 @@
 {
   "apps": [
     {
-      "serverURL": "https://raxa-server-prod.herokuapp.com/parse",
-      "appId": "zMuD13PUQ6OSwjALxuD0VfsM8enWoEt5",
-      "masterKey": "n-&*U%bn_=P|oR,+j/*@761H-%bX,C",
+      "serverURL": "http://ec2-54-236-223-48.compute-1.amazonaws.com:1337/parse",
+      "appId": "myAppId",
+      "masterKey": "myMasterKey",
       "javascriptKey": "akaWOTxqUwPODGsgUG97xemC00txzbPe",
       "restKey": "@fr+B87j]lhoff,y18^dYX{?aDGfm7",
-      "appName": "Raxa",
-      "production": true
-    },
-    {
-      "serverURL": "http://localhost:1337/parse",
-      "appId": "zMuD13PUQ6OSwjALxuD0VfsM8enWoEt5",
-      "masterKey": "n-&*U%bn_=P|oR,+j/*@761H-%bX,C",
-      "appName": "Raxa Dev"
+      "appName": "Petro Wallet"
     }
   ],
   "users": [
     {
       "user":"Adm1n",
-      "pass":"$2y$10$v4.6lF2keHVFm1dqjEZKkOlgVhlvf4xBCFywxmp3Sl62Kt8Lzb2Ry"
+      "pass":"12345"
     }
-  ],
-  "useEncryptedPasswords": true
+  ]
 }
