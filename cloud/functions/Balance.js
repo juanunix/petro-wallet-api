@@ -108,8 +108,10 @@ class Balance {
         }
 
         query.first().then((obj) => {
-            if(!obj)
-                this.response.error("Usuário não encontrado...");
+            if(!obj) {
+                this.response.error({message: "Usuário não encontrado..."});
+                return;
+            }
 
             const result = obj.get('owner') || obj;
             this.response.success(result);
