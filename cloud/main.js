@@ -3,6 +3,6 @@ require("./functions/Balance");
 // require("./functions/resetPlayerNotes");
 
 // require("./triggers/testObject");
-// require("./triggers/player");
+require("./triggers/User");
 
 
