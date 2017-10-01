@@ -3,7 +3,7 @@ Parse.Cloud.beforeSave(Parse.User, function(request, response) {
 
 	if(user.isNew()) {
         user.set("balance", 0);
-        response.success();
+        response.success(user);
         return;
     }
 
@@ -22,6 +22,8 @@ Parse.Cloud.beforeSave(Parse.User, function(request, response) {
 
 			history.save().then(() => {
                 response.success(user);
+            },(error) => {
+                response.error(error);
             });
 		},(error) => {
 			response.error(error);
