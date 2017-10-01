@@ -11,16 +11,20 @@ Parse.Cloud.beforeSave(Parse.User, function(request, response) {
 		let query = new Parse.Query(Parse.User);
 		console.log("----->",user.id);
 		query.get(user.id).then((oldUser) => {
-			if(!oldUser){
-                response.success();
-				return;
-			}
-			const value = oldUser.get("balance")-user.get("balance");
-			let history = new Parse.Object("History");
-			history.set("user", user);
-			history.set("value", value);
+			try {
+                if (!oldUser) {
+                    response.success();
+                    return;
+                }
+                const value = oldUser.get("balance") - user.get("balance");
+                let history = new Parse.Object("History");
+                history.set("user", user);
+                history.set("value", value);
 
-			return history.save();
+                return history.save();
+            } catch (error){
+                response.error(error);
+			}
 		}).then(() => {
 			response.success();
 		}, (error) => {
