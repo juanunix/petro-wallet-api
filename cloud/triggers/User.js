@@ -10,29 +10,20 @@ Parse.Cloud.beforeSave(Parse.User, function(request, response) {
 	if(user.dirty('balance')) {
 		let query = new Parse.Query(Parse.User);
 		query.get(user.id).then((oldUser) => {
-			try {
-                if (!oldUser) {
-                    response.success();
-                    return;
-                }
-                const value = oldUser.get("balance") - user.get("balance");
-                console.log("----->",user.id);
-                let history = new Parse.Object("History");
-                console.log("2----->",user.id);
-                history.set("user", user);
-                history.set("value", value);
-                console.log("3----->",user.id);
-
-                return history.save();
-            } catch (error){
-                console.log("4----->",error);
-                response.error(error);
+			if (!oldUser) {
+				response.success();
+				return;
 			}
+			const value = oldUser.get("balance") - user.get("balance");
+
+			let history = new Parse.Object("History");
+			history.set("user", user);
+			history.set("value", value);
+
+			return history.save();
 		}).then(() => {
-            console.log("5----->",user);
 			response.success();
 		}, (error) => {
-            console.log("6----->",error);
 			response.error(error);
 		});
 	} else {
