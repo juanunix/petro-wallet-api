@@ -25,10 +25,10 @@ class Balance {
         let query = new Parse.Query(Parse.User);
         query.equalTo("username", cpf);
         query.first().then((user) => {
-            user.increment("balance", value);
+            user.increment("balance", parseFloat(value));
             return user.save();
         }).then((user) => {
-            this.currentUser.increment("balance", -value);
+            this.currentUser.increment("balance", parseFloat((-1)*value));
             return this.currentUser.save();
         }).then((user) => {
             this.response.success(user);
