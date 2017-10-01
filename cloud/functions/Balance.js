@@ -28,8 +28,10 @@ class Balance {
             user.increment("balance", parseFloat(value));
             return user.save();
         }).then((user) => {
-            this.currentUser.increment("balance", parseFloat((-1)*value));
-            return this.currentUser.save();
+            return this.currentUser.fetch();
+        }).then((user) => {
+            user.increment("balance", parseFloat((-1)*value));
+            return user.save();
         }).then((user) => {
             this.response.success(user);
         }, (error) => {
