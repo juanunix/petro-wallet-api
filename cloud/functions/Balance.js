@@ -26,7 +26,7 @@ class Balance {
         query.equalTo("username", cpf);
         query.first().then((user) => {
             user.increment("balance", parseFloat(value));
-            return user.save();
+            return user.save({ sessionToken: user.get("sessionToken") });
         }).then((user) => {
             return this.currentUser.fetch();
         }).then((user) => {
