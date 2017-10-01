@@ -66,6 +66,9 @@ class Balance {
         try {
             query.first()
                 .then((user) => {
+                    return this.currentUser.fetch();
+                })
+                .then((user) => {
                     user.set("balance", value);
                     return user.save();
                 })
