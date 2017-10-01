@@ -82,6 +82,30 @@ class Balance {
             return;
         }
     }
+
+    getClientData(){
+        if(!this.currentUser){
+            this.response.error({message: "Tem que estar logado..."});
+            return;
+        }
+
+        const data = this.request.params.identification;
+        let query;
+        if(data.length === 11){
+            query = new Parse.Query(Parse.User);
+            query.equalTo('username', data);
+        } else if(data.length === 7){
+            query = new Parse.Query("Vehicle");
+            query.equalTo("plate", data);
+        }
+
+        query.first().then((obj) => {
+            const result = obj.get('owner') || obj;
+            this.response.success(result);
+        }, (error) => {
+            this.response.error(error);
+        });
+    }
 }
 
 Parse.Cloud.define('transferBalance', (req, res) => {
@@ -90,4 +114,8 @@ Parse.Cloud.define('transferBalance', (req, res) => {
 
 Parse.Cloud.define('pay', (req, res) => {
     new Balance(req, res).pay();
+});
+
+Parse.Cloud.define('getClientData', (req, res) => {
+    new Balance(req, res).getClientData();
 });
