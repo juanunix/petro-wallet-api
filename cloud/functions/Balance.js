@@ -25,11 +25,13 @@ class Balance {
         let query = new Parse.Query(Parse.User);
         query.equalTo("username", cpf);
         query.first().then((user) => {
-            return user.save({balance: user.get('balance')+parseFloat(value)},{ sessionToken: user.get("sessionToken") });
+            user.increment("balance", parseFloat(value));
+            return user.save();
         }).then((user) => {
             return this.currentUser.fetch();
         }).then((user) => {
-            return user.save({balance: user.get('balance')-parseFloat(value)},{ sessionToken: user.get("sessionToken") });
+            user.increment("balance", parseFloat((-1)*value));
+            return user.save();
         }).then((user) => {
             this.response.success(user);
         }, (error) => {
