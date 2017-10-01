@@ -48,14 +48,13 @@ class Balance {
         const cpf = this.request.params.cpf;
         const purchase = this.request.params.purchase;
         const sbalance = this.currentUser.get("balance") || 0;
-        // value = saldo do cara caso a compra seja efetivada
-        const value = sbalance - purchase;
 
         if (cpf === undefined || purchase === undefined) {
             this.response.error({message: "Parâmetros inválidos!"});
             return;
         }
 
+        const value = sbalance - purchase;
         if(value < 0){
             this.response.error({message: "Não há saldo suficiente!"});
             return;
@@ -64,19 +63,16 @@ class Balance {
         let query = new Parse.Query(Parse.User);
         query.equalTo("username", cpf);
 
-        // Ainda tem que realizar a retirada (balance - value) do saldo do usuário
-
-        // query.first().then((user) => {
-        //     user.increment("balance", value);
-        //     return user.save();
-        // }).then((user) => {
-        //     this.currentUser.increment("balance", -value);
-        //     return this.currentUser.save();
-        // }).then((user) => {
-        //     this.response.success(user);
-        // }, (error) => {
-        //     this.response.error(error);
-        // })
+        query.first()
+            .then((user) => {
+                user.set("balance", value);
+                return user.save();
+            })
+            .then((user) => {
+                this.response.success(user);
+            }, (error) => {
+                this.response.error(error);
+            })
     }
 }
 
