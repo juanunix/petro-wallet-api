@@ -90,6 +90,11 @@ class Balance {
         }
 
         const data = this.request.params.identification;
+        if(data === undefined){
+            this.response.error({message: "Parametros invalidos..."});
+            return;
+        }
+
         let query;
         if(data.length === 11){
             query = new Parse.Query(Parse.User);
@@ -97,6 +102,9 @@ class Balance {
         } else if(data.length === 7){
             query = new Parse.Query("Vehicle");
             query.equalTo("plate", data);
+        } else {
+            this.response.error({message: "Parametro deve ser um CPF ou uma placa..."});
+            return;
         }
 
         query.first().then((obj) => {
