@@ -17,11 +17,11 @@ Parse.Cloud.beforeSave(Parse.User, function(request, response) {
 			const value = oldUser.get("balance") - user.get("balance");
 
 			let history = new Parse.Object("History");
-			history.set("user", user);
+			history.set("user", oldUser);
 			history.set("value", value);
 
 			history.save().then(() => {
-                response.success(user);
+                response.success(oldUser);
             },(error) => {
                 response.error(error);
             });
