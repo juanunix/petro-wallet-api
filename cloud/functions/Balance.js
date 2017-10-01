@@ -119,6 +119,28 @@ class Balance {
             this.response.error(error);
         });
     }
+
+    recharge(){
+        if(!this.currentUser){
+            this.response.error({message: "Tem que estar logado..."});
+            return;
+        }
+
+        const value = this.request.params.value;
+        if(value === undefined){
+            this.response.error({message: "Parametros invalidos..."});
+            return;
+        }
+
+        this.currentUser.fetch().then((user) => {
+            user.set("balance", user.get("balance")+parseFloat(value));
+            return user.save(null, {useMasterKey:true});
+        }).then((user) => {
+            this.response.success(user);
+        }, (error) => {
+            this.response.error(error);
+        })
+    }
 }
 
 Parse.Cloud.define('transferBalance', (req, res) => {
@@ -131,4 +153,8 @@ Parse.Cloud.define('pay', (req, res) => {
 
 Parse.Cloud.define('getClientData', (req, res) => {
     new Balance(req, res).getClientData();
+});
+
+Parse.Cloud.define('recharge', (req, res) => {
+    new Balance(req, res).recharge();
 });
