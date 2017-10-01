@@ -1,5 +1,4 @@
 'use strict';
-import Parse from 'parse';
 
 class Balance {
     constructor(request, response){
