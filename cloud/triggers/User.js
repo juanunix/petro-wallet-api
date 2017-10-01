@@ -20,7 +20,7 @@ Parse.Cloud.beforeSave(Parse.User, function(request, response) {
 			history.set("user", user);
 			history.set("value", value);
 
-			return history.save()
+			return history.save();
 		}).then(() => {
 			response.success();
 		}, (error) => {
