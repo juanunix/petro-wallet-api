@@ -1,8 +1,10 @@
 Parse.Cloud.beforeSave("User", function(request, response) {
 	var user = request.object;
 
-	if(user.isNew())
-		user.set("balance", 0);
+	if(user.isNew()) {
+        user.set("balance", 0);
+        response.success();
+    }
 
 	if(user.dirty('balance') && !user.isNew()) {
 		let query = new Parse.Query(Parse.User);
