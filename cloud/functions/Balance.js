@@ -37,8 +37,52 @@ class Balance {
             this.response.error(error);
         })
     }
+
+    pay() {
+        if(!this.currentUser){
+            this.response.error({message: "Tem que estar logado..."});
+            return;
+        }
+
+        const cpf = this.request.params.cpf;
+        const purchase = this.request.params.purchase;
+        const sbalance = this.currentUser.get("balance") || 0;
+        // value = saldo do cara caso a compra seja efetivada
+        const value = sbalance - purchase;
+
+        if (cpf === undefined || purchase === undefined) {
+            this.response.error({message: "Parâmetros inválidos!"});
+            return;
+        }
+
+        if(value < 0){
+            this.response.error({message: "Não há saldo suficiente!"});
+            return;
+        }
+
+        let query = new Parse.Query(Parse.User);
+        query.equalTo("username", cpf);
+
+        // Ainda tem que realizar a retirada (balance - value) do saldo do usuário
+
+        // query.first().then((user) => {
+        //     user.increment("balance", value);
+        //     return user.save();
+        // }).then((user) => {
+        //     this.currentUser.increment("balance", -value);
+        //     return this.currentUser.save();
+        // }).then((user) => {
+        //     this.response.success(user);
+        // }, (error) => {
+        //     this.response.error(error);
+        // })
+    }
 }
 
 Parse.Cloud.define('transferBalance', (req, res) => {
-   new Balance(req, res).transfer();
+    new Balance(req, res).transfer();
+});
+
+Parse.Cloud.define('pay', (req, res) => {
+    new Balance(req, res).pay();
 });
