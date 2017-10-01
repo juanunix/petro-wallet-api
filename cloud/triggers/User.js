@@ -4,9 +4,10 @@ Parse.Cloud.beforeSave("User", function(request, response) {
 	if(user.isNew()) {
         user.set("balance", 0);
         response.success();
+        return;
     }
 
-	if(user.dirty('balance') && !user.isNew()) {
+	if(user.dirty('balance')) {
 		let query = new Parse.Query(Parse.User);
 		query.get(user.id).then((oldUser) => {
 			const value = oldUser.get("balance")-user.get("balance");
