@@ -26,12 +26,12 @@ class Balance {
         query.equalTo("username", cpf);
         query.first().then((user) => {
             user.increment("balance", parseFloat(value));
-            return user.save();
+            return user.save(null, {useMasterKey:true});
         }).then((user) => {
             return this.currentUser.fetch();
         }).then((user) => {
             user.increment("balance", parseFloat((-1)*value));
-            return user.save();
+            return user.save(null, {useMasterKey:true});
         }).then((user) => {
             this.response.success(user);
         }, (error) => {
